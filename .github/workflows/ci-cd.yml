@@ -1,0 +1,23 @@
+name: Kids Paradise CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check PHP version
+        run: php -v
+
+      - name: Validate PHP files
+        run: find . -name "*.php" -exec php -l {} \;
+
+      - name: Build success message
+        run: echo "CI/CD completed successfully for Kids Paradise"
