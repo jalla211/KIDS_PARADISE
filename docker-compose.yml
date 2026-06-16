@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+
+  web:
+    build: .
+    container_name: kids_paradise_web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - database
+
+
+  database:
+    image: mysql:8.0
+    container_name: kids_paradise_database
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kids_paradise_db
+      MYSQL_USER: kids_user
+      MYSQL_PASSWORD: kids_password
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./kids_paradise_db.sql:/docker-entrypoint-initdb.d/kids_paradise_db.sql
+
+
+volumes:
+  mysql_data:
